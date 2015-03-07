@@ -1,0 +1,32 @@
+<head css="darkly.css jax.css" js="jquery bootstrap">
+
+<nav class="navbar navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/">The Jaraxxus Cup</a>
+    </div>
+    <div>
+      <ul class="nav navbar-nav">
+        <li><a href="/events">Events</a></li>
+        <li><a href="/ladder">Ladder</a></li>
+        <li><a href="/faq">FAQ</a></li>
+      </ul>
+    </div>
+    <ul class="nav navbar-nav navbar-right">
+      <li>
+        <div id="login-area" if="!user">
+          <img id="bnet-logo" src="/blizz.png" width="48" height="48">
+          <a id="login" href="/login" class="btn btn-default btn-sm">Login with Battle.net</a>
+        </div>
+        <a if="user" href="/players/{user.battleId}">{user.name}</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<import html="chat.html">
+<import html="ready-check.html">
+
+<script>
+  $("a[href='"+window.location.pathname+"']").addClass("active");
+</script>

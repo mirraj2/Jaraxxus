@@ -1,0 +1,101 @@
+<head css="event.css">
+
+<import html="header.html">
+
+<div class="main container">
+
+  <div if="started" class="row col-md-8 col-md-offset-2">
+      <h1 class="title">{event.name}</h1>
+  </div>
+
+  <div if="!started" class="row col-md-8 col-md-offset-2">
+    <div class="well">
+      <h1>{event.name}</h1>
+      <h2>{event.date} <small>{event.time}</small></h2>
+      <dl>
+      <dt>Single Elimination</dt>
+      <dd>When you lose, you're out.</dd>
+      <dt>Prize</dt>
+      <dd>{event.prize}</dd>
+      <dt>{event.format}</dt>
+      <dd>{event.format_desc}</dd>
+      </dl>
+      <a if="show-join" href="/events/{event.id}/join" class="btn btn-success btn-lg">Join Tournament</a>
+      <a if="show-leave" href="/events/{event.id}/leave" class="btn btn-danger btn-lg">Unregister</a>
+      <button if="show-closed" class="btn btn-default disabled">Registration Closed</button>
+    </div>
+  </div>
+  
+   <div if="started" class="row col-md-8 col-md-offset-2">
+    <ul class="nav nav-tabs">
+      <li loop="round in rounds"><a href="#round{round.num}" data-toggle="tab">Round {round.num}</a></li>
+    </ul>
+    <div class="tab-content well">
+      <div loop="round in rounds" class="tab-pane fade" id="round{round.num}">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>Match</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="match" loop="match in round.matches" data-id="{match.id}">
+              <td>{match.name}</td>
+              <td>{match.status}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <script>
+      $(".nav-tabs li:last").addClass("active");
+      $(".tab-content .tab-pane:last").addClass("active in");
+    </script>
+  </div>
+  
+  <div if="!started" class="row col-md-8 col-md-offset-2">
+    <div class="registration panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Registered Players</h3>
+      </div>
+      <div class="panel-body">
+        <ol>
+          <li loop="player in players">
+            <a href="/players/{player.battleId}" class="player">{player.name}</a>
+            <button if="user.isAdmin" class="btn btn-xs btn-danger kick" data-id="{player.battleId}">Kick</button>
+          </li>
+        </ol>
+        <p if="players.isEmpty()">You could be the first to sign up!</p>
+      </div>
+    </div>
+  </div>
+  
+  <div if="user.isAdmin" class="row col-md-8 col-md-offset-2">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Admin Panel</h3>
+      </div>
+      <div class="panel-body">
+        <div>
+          <label>Status:</label>
+          <select id="status" class="form-control">
+            <option loop="status in statuses">{status}</option>
+          </select>
+          <script>
+            $("#status").val("{{event.status}}");
+          </script>
+        </div>
+        <br>
+        <button class="btn btn-warning btn-sm ready-check">Ready Check</button><br><br>
+        <button class="btn btn-primary btn-sm announce">Make Announcement</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  eventId = {{event.id}};
+</script>
+
+<import js="event.js">

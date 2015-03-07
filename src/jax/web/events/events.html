@@ -1,0 +1,65 @@
+<import html="header.html">
+
+<div class="container">
+  <div class="row well col-md-8 col-md-offset-2">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Date</th>
+          <th>Time</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr loop="event in events" data-id="{event.id}">
+          <td>{event.name}</td>
+          <td>{event.date}</td>
+          <td>{event.time}</td>
+          <td>{event.status}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  <div if="user.isAdmin" class="new-event row col-md-8 col-md-offset-2">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">New Event</h3>
+      </div>
+      <div class="panel-body">
+        <div class="form-group"><input type="text" placeholder="Event Name" class="form-control" name="name"></div>
+        <div class="form-group">
+          <input type="text" placeholder="Date" class="form-control" name="date">
+          <input type="text" placeholder="Time" class="form-control" name="time">
+        </div>
+        <div class="form-group"><input type="text" placeholder="Prize" class="form-control" name="prize"></div>
+        <div class="form-group">
+          <input type="text" placeholder="Format Name" class="form-control" name="format">
+          <input type="text" placeholder="Format Description" class="form-control" name="format_desc">
+        </div>
+        <button class="btn btn-primary">Create Event</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+$("table tbody tr").click(function() {
+  var id = $(this).data("id");
+  window.location = "/events/" + id;
+});
+
+$(".new-event button").click(function(){
+  var data = {};
+  $(".new-event input").each(function(){
+    var name = $(this).attr("name");
+    data[name] = $(this).val();
+  });
+  $.post("/events/create", data).done(function(){
+    location.reload();
+  }).fail(function(){
+    alert("Failed to create event.");
+  });
+});
+</script>

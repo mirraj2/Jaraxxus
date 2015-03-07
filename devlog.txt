@@ -1,0 +1,27 @@
+3/1/14
+  Ready Check  with checkmarks filtering in Maybe do it in the chat window??
+  Persist chat messages, so chat doesn't clear on refresh DONE
+  
+3/2/14
+  -X make the correct # of first-round byes
+  -X make the person who has a bye auto-win
+  -X update the UI for byes a bit
+  -X let admins kick people from signup list
+  - have an auto-kick afk button?
+  -X implement ELO rankings
+  -X implement ladder
+  - implement Player page
+  - more things need to auto-update, like when an event starts or players register
+  
+3/3/14
+  -make it so any admin can add events
+  
+  Ogre magi - I'm ready, i'm not ready
+  
+  
+  add "is it secure?" to the FAQ
+  
+3/7/14
+  - add feature for making next round be manual-startup.
+  - make it easier for people to find their matches
+  - auto refresh once round starts?

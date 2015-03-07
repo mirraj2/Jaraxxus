@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="create_run_jar" name="Create Runnable Jar for Project Jaraxxus">
+    <!--this file was created by Eclipse Runnable JAR Export Wizard-->
+    <!--ANT 1.7 is required                                        -->
+    <target name="create_run_jar">
+        <jar destfile="/Users/jason/workspace/Jaraxxus/build/server.jar" filesetmanifest="mergewithoutmain">
+            <manifest>
+                <attribute name="Main-Class" value="jax.web.JaxServer"/>
+                <attribute name="Class-Path" value="."/>
+            </manifest>
+            <fileset dir="/Users/jason/workspace/Jaraxxus/bin"/>
+            <fileset dir="/Users/jason/workspace/Bowser/bin"/>
+            <zipfileset excludes="META-INF/*.SF" src="/Users/jason/workspace/Bowser/lib/simple-5.1.5.jar"/>
+            <fileset dir="/Users/jason/workspace/JasonLib/bin"/>
+            <zipfileset excludes="META-INF/*.SF" src="/Users/jason/workspace/JasonLib/lib/miglayout-4.0-swing.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="/Users/jason/workspace/JasonLib/lib/gson-2.3.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="/Users/jason/workspace/JasonLib/lib/guava-18.0.jar"/>
+            <fileset dir="/Users/jason/workspace/EZDB/bin"/>
+            <zipfileset excludes="META-INF/*.SF" src="/Users/jason/workspace/EZDB/lib/mysql-connector-java-5.1.32-bin.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="/Users/jason/workspace/EZDB/lib/HikariCP-2.2.4.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="/Users/jason/workspace/EZDB/lib/slf4j-api-1.7.2.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="/Users/jason/workspace/EZDB/lib/javassist-3.18.2-GA.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="/Users/jason/workspace/EZDB/lib/slf4j-simple-1.7.2.jar"/>
+            <fileset dir="/Users/jason/workspace/JavaWebsockets/bin"/>
+        </jar>
+    </target>
+</project>

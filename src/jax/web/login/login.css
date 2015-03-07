@@ -1,0 +1,13 @@
+.container {
+  text-align: center;
+  margin-top: 190px;
+}
+
+#bnet-logo {
+  position: relative;
+  left: 55px;
+}
+
+.btn{
+  padding-left: 60px;
+}

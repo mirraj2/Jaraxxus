@@ -1,0 +1,45 @@
+<head css="match.css">
+
+<import html="header.html">
+
+<div class="container">
+  <div class="row col-md-8 col-md-offset-2 title">
+    <h1><a href="/events/{event.id}">{event.name}</a></h1>
+    <h3 if="!match.isBye()">{match.playerANick} vs {match.playerBNick}</h3>
+    <h3 if="match.isBye()">{match.playerANick} has a Bye</h3>
+  </div>
+  
+  <div if="opponent" class="row col-md-8 col-md-offset-2">
+    <div class="panel panel-default">
+      <div class="panel-heading">Directions</div>
+      <div class="panel-body">
+        <ol>
+          <li>Open Hearthstone and add <b class="battle-tag" data-toggle="tooltip" 
+          data-placement="top" title="CTRL-C to Copy">{opponent}</b> as a friend.</li>
+          <li>Battle them and record your results in the box below.</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+  
+  <div if="editable" class="row col-md-8 col-md-offset-2">
+    <div if="!match.isBye()" class="panel panel-default">
+      <div class="panel-heading">Results</div>
+      <div class="results panel-body">
+        <div loop="game in games" class="game-result" data-index="{game.index}"
+         data-winnera="{game.winnerA}" data-winnerb="{game.winnerB}">
+          <label>Who won?</label>
+          <button class="btn btn-default" data-player="{match.playerA}">{match.playerANick}</button>
+          <button class="btn btn-default" data-player="{match.playerB}">{match.playerBNick}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</div>
+
+<script>
+  matchId = {{match.id}};
+</script>
+
+<import js="match.js">

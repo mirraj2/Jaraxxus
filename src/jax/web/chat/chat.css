@@ -1,0 +1,74 @@
+.chat {
+  position: fixed;
+  bottom: 5px;
+  left: 20px;
+  right: 20px;
+  z-index: 2;
+}
+
+.chat .panel {
+  margin-bottom: 0px;
+}
+
+a.list-group-item {
+  color: white;
+}
+
+a.list-group-item:hover, a.list-group-item:focus {
+  background-color: #303030;
+}
+
+.chat .panel-body {
+  padding: 0px;
+}
+
+.chat .list-group {
+  margin-bottom: 0px;
+  padding: 1px 5px;
+  height: 200px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  font-size: 12px;
+  border-left: 1px solid rgb(100, 100, 100);
+}
+
+.chat .list-group-item {
+  padding: 1px 10px;
+  margin: 3px 0px;
+  background-color: rgba(0, 0, 0, .5);
+}
+
+.chat .input {
+  position: absolute;
+  height: 20px;
+  bottom: 5px;
+  bottom: 5px;
+  width: 100%;
+}
+
+.chat .input input {
+  width: 99%;
+  background-color: rgba(0, 0, 0, .5);
+  color: white;
+  background-color: rgba(0, 0, 0, .5);
+  border-top: 1px solid rgb(100, 100, 100);
+}
+
+.chat .left-side {
+  height: 200px;
+  margin: 0;
+  padding: 5px;
+}
+
+.chat .output {
+  max-height: 165px;
+  overflow-y: auto;
+}
+
+.chat .output b {
+  color: rgb(168, 202, 255);
+}
+
+.chat .output .sys-msg b {
+  color: rgb(255, 181, 47);
+}

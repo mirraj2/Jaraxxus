@@ -1,0 +1,105 @@
+html {
+  background: url("//i.imgur.com/VKbNXp3.jpg") no-repeat center top fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  background-color: transparent;
+  margin-bottom: 250px;
+  margin-top: 90px;
+}
+
+.modal-dialog {
+  margin: 150px auto;
+}
+
+.modal h1, .modal h2 {
+  margin-top: 0;
+}
+
+.modal button {
+  margin-right: 5px;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.5);
+}
+
+body {
+  background-color: transparent;
+}
+
+.navbar {
+  margin-bottom: 40px;
+}
+
+#bnet-logo {
+  position: relative;
+  left: 45px;
+}
+
+#login {
+  padding-left: 45px;
+}
+
+.panel-default>.panel-heading {
+  background-color: rgba(0, 0, 0, .4);
+}
+
+.well, .panel {
+  background: rgba(0, 0, 0, .8);
+}
+
+.well {
+  border: solid 1px rgba(255, 255, 255, .5);
+}
+
+.navbar {
+  background-color: rgba(0, 0, 0, .8);
+}
+
+#login-area {
+  margin-top: 7px;
+}
+
+.navbar li a {
+  color: white;
+}
+
+.navbar li a.active {
+  color: #36d236;
+}
+
+.navbar .navbar-brand {
+  color: white;
+}
+
+.navbar .navbar-brand.active {
+  color: #36d236;
+}
+
+.table tbody tr {
+  cursor: pointer;
+}
+
+.table th {
+  border-bottom: solid white 1px !important;
+}
+
+a.player.ready {
+  color: #1fff02;
+}
+
+a.player.not-ready {
+  color: red;
+}

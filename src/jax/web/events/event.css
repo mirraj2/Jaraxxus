@@ -1,0 +1,43 @@
+h1 {
+  margin-top: 10px;
+}
+
+h2 {
+  margin-bottom: 20px;
+}
+
+h1.title {
+  background: rgba(40, 40, 40, .6);
+  color: #36d236;
+  padding: 10px;
+  margin-bottom: 30px;
+}
+
+.main {
+  margin-top: 50px;
+}
+
+.nav-tabs li.active a {
+  background: rgba(40, 40, 40, .8) !important;
+}
+
+.btn {
+  font-weight: bold;
+}
+
+dd {
+  margin-bottom: 15px;
+}
+
+ol a {
+  color: white;
+}
+
+label {
+  margin-right: 10px;
+}
+
+.registration .player {
+  display: inline-block;
+  width: 100px;
+}
