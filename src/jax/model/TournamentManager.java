@@ -16,12 +16,15 @@ import jax.db.MatchDB;
 import jax.db.SignupDB;
 import jax.db.UserDB;
 import jax.web.chat.JaraxxusSocketServer;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
 
 public class TournamentManager {
+
+  // put byes in once <= 64 players
 
   public static final String BYE = "BYE";
   private static final User SYSTEM_USER = new User(-1, "System", true);
@@ -77,7 +80,7 @@ public class TournamentManager {
     return true;
   }
 
-  private void moveToNextRound(long event) {
+  public void moveToNextRound(long event) {
     // take the winners of the last round and move them on
 
     int currentRound = matchDB.getCurrentRound(event);
@@ -111,8 +114,17 @@ public class TournamentManager {
       return; // this tournament was already started.
     }
 
+    Collection<String> readyPlayers = ImmutableSet.copyOf(JaraxxusSocketServer.instance.readyPlayers.get(event.id));
+
     List<Integer> playerIds = signupDB.getPlayersSignedUpFor(event.id);
     List<String> players = map(userDB.getUsers(playerIds), user -> user.battleTag);
+    
+    // for (int i = players.size() - 1; i >= 0; i--) {
+    // if (!readyPlayers.contains(players.get(i))) {
+    // Log.info(players.get(i) + " was not ready and was auto-kicked.");
+    // players.remove(i);
+    // }
+    // }
 
     generateMatches(event.id, 1, players);
   }
@@ -122,8 +134,19 @@ public class TournamentManager {
 
     Map<String, String> pairings = Maps.newLinkedHashMap();
 
-    int numByes = roundPowerOfTwoUp(players.size()) - players.size();
+    int numByes;
+    if (players.size() > 64) {
+      numByes = players.size() % 2;
+    } else {
+      numByes = roundPowerOfTwoUp(players.size()) - players.size();
+    }
+
     int playersWithoutByes = players.size() - numByes;
+
+    if (players.size() == 1) {
+      numByes = 1;
+      playersWithoutByes = 0;
+    }
 
     for (int i = 0; i < playersWithoutByes; i += 2) {
       pairings.put(players.get(i), players.get(i + 1));

@@ -8,7 +8,9 @@ import java.security.KeyStore;
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
 import jax.auth.BattleNetAPI;
+import jax.upgrade.Backcompat;
 import jax.web.chat.ChatController;
+import jax.web.chat.ChatProfilePage;
 import jax.web.chat.JaraxxusSocketServer;
 import jax.web.events.EventSignupAPI;
 import jax.web.events.EventsController;
@@ -16,9 +18,11 @@ import jax.web.faq.FAQController;
 import jax.web.home.Home;
 import jax.web.ladder.LadderController;
 import jax.web.login.Login;
+import jax.web.login.Logout;
 import jax.web.match.MatchController;
 import jax.web.player.PlayerPage;
 import bowser.WebServer;
+import com.google.common.base.Strings;
 import com.google.common.base.Throwables;
 
 public class JaxServer {
@@ -49,37 +53,43 @@ public class JaxServer {
         .shortcut("bootstrap", "//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.min.js")
         .shortcut("cookie", "//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js")
         .shortcut("buzz", "//cdnjs.cloudflare.com/ajax/libs/buzz/1.1.8/buzz.min.js")
+        .shortcut("dateformat", "//cdnjs.cloudflare.com/ajax/libs/jquery-dateFormat/1.0/jquery.dateFormat.min.js")
         .add(new Authenticator())
         .controller(new ChatController(domain, websocketPort))
         .controller(new Login(battleNetAPI))
         .controller(new Home())
+        .controller(new Logout())
         .controller(new EventsController())
         .controller(new LadderController())
         .controller(new FAQController())
         .controller(new MatchController())
         .controller(new PlayerPage())
+        .controller(new ChatProfilePage())
         .add(new Redirector(battleNetAPI))
         .controller(new EventSignupAPI())
         .start();
 
-    new WebServer("Jaraxxus", sslPort, devMode)
-        .controller(new Login(battleNetAPI))
-        .add(new SSLRedirect(domain + ":" + httpPort))
-        .ssl(getSSLContext())
-        .start();
+    String keystorePass = config.get("keystore_pass");
+    if (!Strings.isNullOrEmpty(keystorePass)) {
+      new WebServer("Jaraxxus", sslPort, devMode)
+          .controller(new Login(battleNetAPI))
+          .add(new SSLRedirect(domain + ":" + httpPort))
+          .ssl(getSSLContext(config.get("keystore_pass")))
+          .start();
+    }
 
     new JaraxxusSocketServer(websocketPort).start();
 
     Log.info("Server started.");
   }
 
-  private SSLContext getSSLContext() {
+  private SSLContext getSSLContext(String keystorePass) {
     try {
       KeyStore keystore = KeyStore.getInstance(KeyStore.getDefaultType());
-      keystore.load(IO.from(getClass(), "cert/keystore.jks").asStream(), "nimrod".toCharArray());
+      keystore.load(IO.from(getClass(), "cert/keystore.jks").asStream(), keystorePass.toCharArray());
 
       KeyManagerFactory keyManagerFactory = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
-      keyManagerFactory.init(keystore, "nimrod".toCharArray());
+      keyManagerFactory.init(keystore, keystorePass.toCharArray());
 
       SSLContext ret = SSLContext.getInstance("SSLv3");
       // sslContext.init(keyManagerFactory.getKeyManagers(), new TrustManager[] { new NaiveX509TrustManager() },
@@ -92,6 +102,7 @@ public class JaxServer {
   }
 
   public static void main(String[] args) {
+    new Backcompat().run();
     new JaxServer().run();
   }
 

@@ -1,6 +1,7 @@
 package jax.auth;
 
 import jasonlib.IO;
+import jasonlib.IO.Input;
 import jasonlib.Json;
 import jasonlib.Log;
 import java.util.Map;
@@ -19,7 +20,7 @@ public class BattleNetAPI {
   }
 
   public String getBattleTag(String token) {
-    Json json = get("https://us.api.battle.net/account/user/battletag",
+    Json json = get("https://us.api.battle.net/account/user/battletag", false,
         ImmutableMap.of("access_token", token));
     return json.get("battletag");
   }
@@ -39,12 +40,12 @@ public class BattleNetAPI {
     params.put("code", code);
     params.put("redirect_uri", callback);
 
-    Json json = get(url, params);
+    Json json = get(url, true, params);
 
     return new LoginData(json.get("access_token"), json.getInt("accountId"));
   }
 
-  private Json get(String url, Map<String, String> params) {
+  private Json get(String url, boolean post, Map<String, String> params) {
     StringBuilder sb = new StringBuilder();
     sb.append(url).append("?");
     params.forEach((key, value) -> {
@@ -57,7 +58,11 @@ public class BattleNetAPI {
     Exception e = null;
     for (int i = 0; i < 5; i++) {
       try {
-        return IO.fromURL(fullURL).toJson();
+        Input input = IO.fromURL(fullURL);
+        if (post) {
+          input.httpPost();
+        }
+        return input.toJson();
       } catch (Exception ee) {
         e = ee;
         if (i < 4) {
@@ -77,19 +82,5 @@ public class BattleNetAPI {
       this.accountId = accountId;
     }
   }
-
-  // public static void main(String[] args) {
-  // BattleNetAPI api = new BattleNetAPI("snxb4cfmzhq68kbmqrxfvacmndwahcc9", "3JWK2ybdDfwaTsq94NGTu6w9YJVnuvjk",
-  // "https://jaraxxus.com/callback");
-  //
-  // api.accessToken = "4pcwsdmjdnrwpda77f6f6fvz";
-  //
-  // // String url = api.getAuthURL();
-  // // Log.debug(url);
-  //
-  // // api.login("dhcj7m4ujwupn7cjcpchdabp");
-  //
-  // Log.debug(api.getBattleTag());
-  // }
 
 }

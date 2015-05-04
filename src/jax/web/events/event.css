@@ -13,10 +13,6 @@ h1.title {
   margin-bottom: 30px;
 }
 
-.main {
-  margin-top: 50px;
-}
-
 .nav-tabs li.active a {
   background: rgba(40, 40, 40, .8) !important;
 }

@@ -63,6 +63,16 @@ public class MatchController extends Controller {
     context.put("event", event);
     context.put("match", match);
 
+    if (match.isBye()) {
+      context.put("matchTitle", match.playerANick + " has a Bye");
+    } else {
+      if (user != null && user.isAdmin) {
+        context.put("matchTitle", match.playerA + " vs " + match.playerB);
+      } else {
+        context.put("matchTitle", match.playerANick + " vs " + match.playerBNick);
+      }
+    }
+
     if (user != null) {
       boolean iAmPlayerA = match.playerA.equals(user.battleTag);
       boolean iAmPlayerB = match.playerB.equals(user.battleTag);

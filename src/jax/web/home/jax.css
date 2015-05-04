@@ -1,12 +1,40 @@
 html {
-  background: url("//i.imgur.com/VKbNXp3.jpg") no-repeat center top fixed;
+  background-color: black;
+  margin-top: 90px;
+  background: url("//i.imgur.com/VKbNXp3.jpg");
+  background-position: center top;
+  background-attachment: fixed;
+  background-position: -200px 0px;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-  background-color: transparent;
-  margin-bottom: 250px;
-  margin-top: 90px;
+}
+
+body>.container, .container.status {
+  padding-right: 270px;
+}
+
+.status h2, .status h3 {
+  margin: 0;
+}
+
+.status h4 {
+  margin-bottom: 5px;
+  margin-top: 0px;
+}
+
+.status h3 {
+  margin-bottom: 10px;
+}
+
+.status .countdown a {
+  color: #ddffcd;
+}
+
+.status .countdown .ready{
+  color: #36d236;
+  font-size: 18px;
 }
 
 .modal-dialog {
@@ -65,7 +93,7 @@ body {
 }
 
 .navbar {
-  background-color: rgba(0, 0, 0, .8);
+  background-color: black;
 }
 
 #login-area {
@@ -78,6 +106,10 @@ body {
 
 .navbar li a.active {
   color: #36d236;
+}
+
+.navbar .dropdown-menu li a{
+  color: black;
 }
 
 .navbar .navbar-brand {
@@ -102,4 +134,8 @@ a.player.ready {
 
 a.player.not-ready {
   color: red;
+}
+
+.inline {
+  display: inline;
 }

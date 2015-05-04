@@ -1,4 +1,6 @@
-<head css="darkly.css jax.css" js="jquery bootstrap">
+<head css="darkly.css jax.css" js="jquery bootstrap dateformat jax.js">
+
+<div class="jax-img"></div>
 
 <nav class="navbar navbar-fixed-top" role="navigation">
   <div class="container">
@@ -18,7 +20,12 @@
           <img id="bnet-logo" src="/blizz.png" width="48" height="48">
           <a id="login" href="/login" class="btn btn-default btn-sm">Login with Battle.net</a>
         </div>
-        <a if="user" href="/players/{user.battleId}">{user.name}</a>
+      </li>
+      <li if="user" class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">{user.name} <span class="caret"></span></a>
+        <ul class="dropdown-menu" role="menu">
+          <li><a href="/logout">Log Out</a></li>
+        </ul>
       </li>
     </ul>
   </div>
@@ -26,6 +33,21 @@
 
 <import html="chat.html">
 <import html="ready-check.html">
+
+<div class="container status">
+  <div class="row col-md-6 col-md-offset-3 well countdown hidden">
+    <h4>You're registered for</h4>
+    <h3><a href="/events/?"></a></h3>
+    <h2><small>It starts in </small></h2><h2 class="starts-in"></h2>
+    <br>
+    <p class="not-ready">Be here within 30 min of the start time to be marked as ready.</p>
+    <p class="ready" title="You've been marked as ready."><span class="glyphicon glyphicon-ok"></span> Ready</p>
+  </div>
+  <div class="row col-md-6 col-md-offset-3 well match hidden">
+    <h3></h3>
+    <a href="/match/?">View my match</a>
+  </div>
+</div>
 
 <script>
   $("a[href='"+window.location.pathname+"']").addClass("active");

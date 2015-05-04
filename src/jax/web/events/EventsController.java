@@ -2,7 +2,9 @@ package jax.web.events;
 
 import static com.google.common.base.Preconditions.checkState;
 import static jasonlib.util.Utils.parseEnum;
+import static java.lang.Integer.parseInt;
 import jasonlib.Log;
+import java.time.LocalDateTime;
 import java.util.List;
 import jax.db.EventDB;
 import jax.db.JaxDB;
@@ -15,6 +17,7 @@ import jax.model.User;
 import bowser.Controller;
 import bowser.Handler;
 import bowser.template.Data;
+import com.google.common.collect.Lists;
 
 public class EventsController extends Controller {
 
@@ -38,7 +41,13 @@ public class EventsController extends Controller {
 
     Log.info(user + " is creating an event called " + request.param("name"));
 
-    eventDB.createEvent(request.param("name"), request.param("date"), request.param("time"), request.param("prize"),
+    String datetime = request.param("date") + "T" + request.param("time");
+    LocalDateTime date = LocalDateTime.parse(datetime);
+
+    int timezoneOffset = parseInt(request.param("timezoneOffset"));
+    date = date.plusMinutes(timezoneOffset);
+
+    eventDB.createEvent(request.param("name"), date, request.param("prize"),
         request.param("format"), request.param("format_desc"), false);
   };
 
@@ -69,8 +78,16 @@ public class EventsController extends Controller {
   };
 
   private final Data eventsData = context -> {
+    context.request.getPath();
     List<Event> events = eventDB.getAll();
+    List<Event> pastEvents = Lists.newArrayList();
+    for (int i = 0; i < events.size(); i++) {
+      if (events.get(i).is(Status.COMPLETE)) {
+        pastEvents.add(events.remove(i--));
+      }
+    }
     context.put("events", events);
+    context.put("pastEvents", pastEvents);
   };
 
   private final Data eventData = context -> {

@@ -17,7 +17,7 @@ public class ChatController extends Controller {
 
   @Override
   public void init() {
-    route("GET", "/chat2.js").to(chatScript);
+    route("GET", "/chat.js").to(chatScript);
   }
 
   private Handler chatScript = (request, response) -> {

@@ -43,6 +43,13 @@ public class MatchDB extends JaxDB {
     return Multimaps.index(map(rows, deserializer), match -> match.round);
   }
 
+  public Match getLatestMatch(long eventId, String battleTag) {
+    Row row = db.selectSingleRow("SELECT * FROM `match`"
+        + " WHERE event = ? AND (playerA = ? OR playerB = ?) "
+        + "ORDER BY `round` DESC LIMIT 1", eventId, battleTag, battleTag);
+    return deserializer.apply(row);
+  }
+
   public Integer getCurrentRound(long eventId) {
     Row row = db.selectSingleRow("SELECT round FROM `match` WHERE event = ? ORDER BY round DESC LIMIT 1", eventId);
     return row == null ? null : row.getInt("round");

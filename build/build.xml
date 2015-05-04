@@ -15,6 +15,7 @@
             <zipfileset excludes="META-INF/*.SF" src="/Users/jason/workspace/JasonLib/lib/miglayout-4.0-swing.jar"/>
             <zipfileset excludes="META-INF/*.SF" src="/Users/jason/workspace/JasonLib/lib/gson-2.3.jar"/>
             <zipfileset excludes="META-INF/*.SF" src="/Users/jason/workspace/JasonLib/lib/guava-18.0.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="/Users/jason/workspace/JasonLib/lib/objenesis-2.1.jar"/>
             <fileset dir="/Users/jason/workspace/EZDB/bin"/>
             <zipfileset excludes="META-INF/*.SF" src="/Users/jason/workspace/EZDB/lib/mysql-connector-java-5.1.32-bin.jar"/>
             <zipfileset excludes="META-INF/*.SF" src="/Users/jason/workspace/EZDB/lib/HikariCP-2.2.4.jar"/>

@@ -21,6 +21,8 @@ public class EventSignupAPI extends Controller {
   }
 
   private final Handler join = (request, response) -> {
+    // TODO ban Gwork#1171 -- actually just keep an eye on him
+
     int eventId = request.getInt(1);
     Event event = eventDB.get(eventId);
 

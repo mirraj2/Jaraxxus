@@ -1,18 +1,19 @@
-<head css="chat.css" js="cookie buzz chat2.js">
+<head css="chat.css" js="cookie buzz chat.js">
 
 <div class="chat">
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title">Chat</h3>
-    </div>
-    <div class="panel-body">
-      <div class="left-side col-xs-10">
-        <div class="output"></div>
-        <div class="input">
-          <input type="text" placeholder="Enter chat text...">
-        </div>
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="#chat" data-toggle="tab">Chat</a></li>
+    <li><a href="#players" data-toggle="tab">Players <span class="badge player-counter">0</span></a></li>
+  </ul>
+  <div class="tab-content well">
+    <div class="tab-pane fade active in" id="chat">
+      <div class="output"></div>
+      <div class="input">
+        <input type="text" placeholder="Enter chat text...">
       </div>
-      <div class="list-group col-xs-2"></div>
+    </div>
+    <div class="tab-pane fade" id="players">
+      <div class="list-group"></div>
     </div>
   </div>
 </div>

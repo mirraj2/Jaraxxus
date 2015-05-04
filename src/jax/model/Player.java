@@ -9,19 +9,21 @@ public class Player {
 
   private static AtomicInteger counter = new AtomicInteger();
 
-  private final WebSocket socket;
+  public WebSocket socket;
 
   public final int id = counter.getAndIncrement();
   public User user;
   public String guestName;
   public String room;
+  public final String ip;
 
   public Player(WebSocket socket) {
     this.socket = socket;
+    this.ip = socket.getRemoteSocketAddress().getHostString();
   }
 
   public String getIP() {
-    return socket.getRemoteSocketAddress().getHostString();
+    return ip;
   }
 
   public void send(Json json) {

@@ -1,13 +1,29 @@
 .chat {
   position: fixed;
-  bottom: 5px;
-  left: 20px;
-  right: 20px;
+  right: 5px;
+  top: 60px;
+  width: 270px;
   z-index: 2;
 }
 
-.chat .panel {
-  margin-bottom: 0px;
+.chat .input {
+  position: absolute;
+  height: 20px;
+  bottom: 5px;
+  width: 100%;
+}
+
+.chat .output {
+  overflow-y: auto;
+  padding: 7px;
+  padding-top: 5px;
+  height: 300px;
+  margin-bottom: 20px;
+}
+
+.chat .well {
+  padding: 0;
+  margin: 0;
 }
 
 a.list-group-item {
@@ -25,7 +41,6 @@ a.list-group-item:hover, a.list-group-item:focus {
 .chat .list-group {
   margin-bottom: 0px;
   padding: 1px 5px;
-  height: 200px;
   overflow-x: hidden;
   overflow-y: auto;
   font-size: 12px;
@@ -38,14 +53,6 @@ a.list-group-item:hover, a.list-group-item:focus {
   background-color: rgba(0, 0, 0, .5);
 }
 
-.chat .input {
-  position: absolute;
-  height: 20px;
-  bottom: 5px;
-  bottom: 5px;
-  width: 100%;
-}
-
 .chat .input input {
   width: 99%;
   background-color: rgba(0, 0, 0, .5);
@@ -54,19 +61,12 @@ a.list-group-item:hover, a.list-group-item:focus {
   border-top: 1px solid rgb(100, 100, 100);
 }
 
-.chat .left-side {
-  height: 200px;
-  margin: 0;
-  padding: 5px;
-}
-
-.chat .output {
-  max-height: 165px;
-  overflow-y: auto;
-}
-
 .chat .output b {
   color: rgb(168, 202, 255);
+}
+
+.chat .output b.admin{
+  color: rgb(216, 75, 255);
 }
 
 .chat .output .sys-msg b {

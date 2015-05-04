@@ -3,11 +3,15 @@ package jax.db;
 import static com.google.common.base.Preconditions.checkState;
 import static jasonlib.util.Functions.map;
 import static jasonlib.util.Utils.parseEnum;
+import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.List;
 import java.util.function.Function;
 import jax.model.Event;
 import jax.model.Event.Status;
+import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
+import com.google.common.collect.ImmutableList;
 import ez.Row;
 import ez.Table;
 
@@ -18,8 +22,7 @@ public class EventDB extends JaxDB {
     return new Table("event")
         .idColumn()
         .column("name", String.class)
-        .column("date", String.class)
-        .column("time", String.class)
+        .column("when", LocalDateTime.class)
         .column("status", String.class)
         .column("prize", String.class)
         .column("format", String.class)
@@ -27,13 +30,12 @@ public class EventDB extends JaxDB {
         .column("featured", Boolean.class);
   }
 
-  public void createEvent(String name, String date, String time, String prize, String format, String formatDesc,
+  public void createEvent(String name, LocalDateTime date, String prize, String format, String formatDesc,
       boolean featured) {
     checkState(!Strings.isNullOrEmpty(name));
     db.insert("event", new Row()
         .with("name", name)
-        .with("date", date)
-        .with("time", time)
+        .with("when", date)
         .with("status", Status.REGISTRATION_OPEN)
         .with("prize", prize)
         .with("format", format)
@@ -60,6 +62,14 @@ public class EventDB extends JaxDB {
     return deserializer.apply(row);
   }
 
+  public List<Event> getEvents(Collection<Long> eventIds) {
+    if(eventIds.isEmpty()){
+      return ImmutableList.of();
+    }
+    List<Row> rows = db.select("SELECT * FROM event WHERE id IN (" + Joiner.on(",").join(eventIds) + ")");
+    return map(rows, deserializer);
+  }
+
   public void updateStatus(long id, Status status) {
     db.update("UPDATE event SET status = ? WHERE id = ?", status, id);
   }
@@ -67,8 +77,7 @@ public class EventDB extends JaxDB {
   private final Function<Row, Event> deserializer = row -> {
     return new Event(row.getLong("id"),
         row.get("name"),
-        row.get("date"),
-        row.get("time"),
+        row.getDateTime("when"),
         parseEnum(row.get("status"), Status.class),
         row.get("prize"),
         row.get("format"),

@@ -15,6 +15,10 @@ public class SignupDB extends JaxDB {
         .column("battleId", Integer.class);
   }
 
+  public List<Long> getEventsForPlayer(int battleId) {
+    return map(db.select("SELECT event FROM signup WHERE battleId = ?", battleId), row -> row.getLong("event"));
+  }
+
   public void register(int battleId, long eventId) {
     unregister(battleId, eventId);
     db.insert("signup",

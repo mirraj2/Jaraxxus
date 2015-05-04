@@ -1,23 +1,31 @@
 package jax.model;
 
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
+
 public class Event {
 
   public final long id;
-  public final String name, date, time, prize, format, format_desc;
+  public final LocalDateTime date;
+  public final String name, prize, format, format_desc;
   public final Status status;
   public final boolean featured;
 
-  public Event(long id, String name, String date, String time, Status status, String prize, String format,
+  public Event(long id, String name, LocalDateTime date, Status status, String prize, String format,
       String format_desc, boolean featured) {
     this.id = id;
     this.name = name;
     this.date = date;
-    this.time = time;
     this.status = status;
     this.prize = prize;
     this.format = format;
     this.format_desc = format_desc;
     this.featured = featured;
+  }
+
+  public String getDateString() {
+    return date.atOffset(ZoneOffset.UTC).format(DateTimeFormatter.ISO_INSTANT);
   }
 
   public boolean canJoin() {
@@ -35,6 +43,11 @@ public class Event {
       }
     }
     return false;
+  }
+
+  @Override
+  public String toString() {
+    return name;
   }
 
   public static enum Status {
